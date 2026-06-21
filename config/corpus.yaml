@@ -1,0 +1,99 @@
+amc: HDFC Asset Management Company
+amc_short: HDFC Mutual Fund
+
+schemes:
+  - slug: hdfc-pharma-and-healthcare-fund-direct-growth
+    scheme_name: HDFC Pharma and Healthcare Fund Direct Growth
+    category: Equity — Sectoral/Thematic
+    source_url: https://groww.in/mutual-funds/hdfc-pharma-and-healthcare-fund-direct-growth
+    aliases:
+      - pharma
+      - healthcare
+      - pharma healthcare
+
+  - slug: hdfc-nifty-50-index-fund-direct-growth
+    scheme_name: HDFC Nifty 50 Index Fund Direct Growth
+    category: Equity — Index
+    source_url: https://groww.in/mutual-funds/hdfc-nifty-50-index-fund-direct-growth
+    aliases:
+      - nifty 50
+      - index fund
+      - nifty index
+
+  - slug: hdfc-balanced-advantage-fund-direct-growth
+    scheme_name: HDFC Balanced Advantage Fund Direct Growth
+    category: Hybrid — Dynamic Asset Allocation
+    source_url: https://groww.in/mutual-funds/hdfc-balanced-advantage-fund-direct-growth
+    aliases:
+      - balanced advantage
+      - baf
+
+  - slug: hdfc-gold-etf-fund-of-fund-direct-plan-growth
+    scheme_name: HDFC Gold ETF Fund of Fund Direct Plan Growth
+    category: Commodities — Gold FoF
+    source_url: https://groww.in/mutual-funds/hdfc-gold-etf-fund-of-fund-direct-plan-growth
+    aliases:
+      - gold etf
+      - gold fof
+      - gold fund
+
+  - slug: hdfc-small-cap-fund-direct-growth
+    scheme_name: HDFC Small Cap Fund Direct Growth
+    category: Equity — Small Cap
+    source_url: https://groww.in/mutual-funds/hdfc-small-cap-fund-direct-growth
+    aliases:
+      - small cap
+
+  - slug: hdfc-equity-fund-direct-growth
+    scheme_name: HDFC Equity Fund Direct Growth
+    category: Equity — Large Cap
+    source_url: https://groww.in/mutual-funds/hdfc-equity-fund-direct-growth
+    aliases:
+      - equity fund
+      - large cap
+
+  - slug: hdfc-defence-fund-direct-growth
+    scheme_name: HDFC Defence Fund Direct Growth
+    category: Equity — Sectoral/Thematic
+    source_url: https://groww.in/mutual-funds/hdfc-defence-fund-direct-growth
+    aliases:
+      - defence
+      - defense
+
+  - slug: hdfc-mid-cap-fund-direct-growth
+    scheme_name: HDFC Mid Cap Fund Direct Growth
+    category: Equity — Mid Cap
+    source_url: https://groww.in/mutual-funds/hdfc-mid-cap-fund-direct-growth
+    aliases:
+      - mid cap
+
+  - slug: hdfc-silver-etf-fof-direct-growth
+    scheme_name: HDFC Silver ETF FoF Direct Growth
+    category: Commodities — Silver FoF
+    source_url: https://groww.in/mutual-funds/hdfc-silver-etf-fof-direct-growth
+    aliases:
+      - silver etf
+      - silver fof
+      - silver fund
+
+  - slug: hdfc-short-term-opportunities-fund-direct-growth
+    scheme_name: HDFC Short Term Opportunities Fund Direct Growth
+    category: Debt — Short Duration
+    source_url: https://groww.in/mutual-funds/hdfc-short-term-opportunities-fund-direct-growth
+    aliases:
+      - short term opportunities
+      - debt fund
+
+  - slug: hdfc-focused-fund-direct-growth
+    scheme_name: HDFC Focused Fund Direct Growth
+    category: Equity — Focused
+    source_url: https://groww.in/mutual-funds/hdfc-focused-fund-direct-growth
+    aliases:
+      - focused fund
+
+  - slug: hdfc-multi-cap-fund-direct-growth
+    scheme_name: HDFC Multi Cap Fund Direct Growth
+    category: Equity — Multi Cap
+    source_url: https://groww.in/mutual-funds/hdfc-multi-cap-fund-direct-growth
+    aliases:
+      - multi cap

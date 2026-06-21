@@ -1,0 +1,41 @@
+name: Daily Ingestion
+
+on:
+  schedule:
+    # 10:00 AM IST (UTC+5:30) = 04:30 UTC
+    - cron: "30 4 * * *"
+  workflow_dispatch:
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily ingestion job
+        run: python -m scheduler.daily --no-retry
+        env:
+          SCHEDULER_HOUR: "10"
+          SCHEDULER_MINUTE: "0"
+          SCHEDULER_TIMEZONE: Asia/Kolkata
+
+      - name: Upload scheduler log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scheduler-log
+          path: data/scheduler_log.json
+          if-no-files-found: ignore

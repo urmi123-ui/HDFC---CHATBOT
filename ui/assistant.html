@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Facts Only Assistant — HDFC Insights Hub</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <main class="page-main">
+      <div class="container assistant-layout">
+        <aside class="sidebar assistant-sidebar" id="assistant-sidebar" aria-label="Supported schemes"></aside>
+
+        <div class="chat-panel">
+          <div class="chat-disclaimer-bar">Facts-only. No investment advice.</div>
+          <div class="chat-messages" id="chat-messages" aria-live="polite"></div>
+          <div class="chat-error hidden" id="chat-error" role="alert"></div>
+          <form class="chat-input-area" id="chat-form">
+            <input
+              class="chat-input"
+              id="chat-input"
+              type="text"
+              name="message"
+              placeholder="Ask a factual question about an HDFC scheme…"
+              autocomplete="off"
+              maxlength="500"
+              required
+            />
+            <button class="btn btn-primary" id="chat-send" type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="/js/schemes.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/chat.js"></script>
+    <script>
+      initLayout("assistant");
+      initChat();
+      if (typeof renderSchemeSidebar === "function") {
+        renderSchemeSidebar("assistant-sidebar", (scheme) => {
+          if (typeof prefillChatInput === "function") prefillChatInput(scheme);
+        });
+      }
+    </script>
+  </body>
+</html>

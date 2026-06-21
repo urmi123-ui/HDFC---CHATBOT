@@ -1,0 +1,168 @@
+{
+  "steps": {
+    "parse": {
+      "total": 12,
+      "sections_per_scheme": {
+        "hdfc-pharma-and-healthcare-fund-direct-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ],
+        "hdfc-nifty-50-index-fund-direct-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ],
+        "hdfc-balanced-advantage-fund-direct-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ],
+        "hdfc-gold-etf-fund-of-fund-direct-plan-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ],
+        "hdfc-small-cap-fund-direct-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ],
+        "hdfc-equity-fund-direct-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ],
+        "hdfc-defence-fund-direct-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ],
+        "hdfc-mid-cap-fund-direct-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ],
+        "hdfc-silver-etf-fof-direct-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ],
+        "hdfc-short-term-opportunities-fund-direct-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ],
+        "hdfc-focused-fund-direct-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ],
+        "hdfc-multi-cap-fund-direct-growth": [
+          "overview",
+          "expense_ratio",
+          "exit_load",
+          "minimum_investment",
+          "benchmark",
+          "tax",
+          "fund_management",
+          "investment_objective",
+          "fund_house"
+        ]
+      }
+    },
+    "index": {
+      "index": {
+        "collection": "mf_faq_chunks",
+        "persist_dir": "/Users/ritikgupta/Desktop/rag chatbot/data/index",
+        "chunk_count": 125,
+        "embedding_model": "BAAI/bge-small-en-v1.5"
+      },
+      "metadata": {
+        "path": "/Users/ritikgupta/Desktop/rag chatbot/data/index/scheme_metadata.json",
+        "scheme_count": 12
+      },
+      "chunks_by_scheme": {
+        "hdfc-balanced-advantage-fund-direct-growth": 14,
+        "hdfc-defence-fund-direct-growth": 11,
+        "hdfc-equity-fund-direct-growth": 10,
+        "hdfc-focused-fund-direct-growth": 10,
+        "hdfc-gold-etf-fund-of-fund-direct-plan-growth": 10,
+        "hdfc-mid-cap-fund-direct-growth": 10,
+        "hdfc-multi-cap-fund-direct-growth": 10,
+        "hdfc-nifty-50-index-fund-direct-growth": 10,
+        "hdfc-pharma-and-healthcare-fund-direct-growth": 10,
+        "hdfc-short-term-opportunities-fund-direct-growth": 10,
+        "hdfc-silver-etf-fof-direct-growth": 10,
+        "hdfc-small-cap-fund-direct-growth": 10
+      }
+    }
+  },
+  "status": "success"
+}

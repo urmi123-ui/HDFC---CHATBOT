@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Historical Data — HDFC Insights Hub</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <main class="page-main">
+      <div class="container">
+        <h1 class="page-heading">Historical Data</h1>
+        <p class="page-subtitle">
+          Access past Net Asset Value (NAV) records and analyze historical performance across our comprehensive range of mutual fund schemes.
+        </p>
+
+        <div class="filter-row">
+          <div>
+            <label class="field-label" for="scheme-select">Select Scheme</label>
+            <select class="select-input" id="scheme-select"></select>
+          </div>
+          <div>
+            <label class="field-label" for="date-range">Date Range (Currently fixed to 1Y)</label>
+            <div class="date-range-field">
+              <span class="date-range-icon" aria-hidden="true">📅</span>
+              <input class="text-input date-range-input" id="date-range" type="text" disabled />
+            </div>
+          </div>
+        </div>
+
+        <div class="historical-grid">
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h2>
+                <svg class="panel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <polyline points="3 17 9 11 13 15 21 7"></polyline>
+                </svg>
+                NAV Performance History
+              </h2>
+              <div class="period-tabs">
+                <button type="button" class="period-tab period-tab--active">1Y</button>
+                <button type="button" class="period-tab" disabled>3Y</button>
+                <button type="button" class="period-tab" disabled>5Y</button>
+              </div>
+            </div>
+            <div class="chart-coming-soon">
+              <div class="chart-coming-soon-icon">⏳</div>
+              <strong>Interactive Chart Coming Soon</strong>
+              <span>Detailed visual analysis tools are currently under development.</span>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-header">
+              <h2>Data Table</h2>
+              <button type="button" class="csv-link" disabled title="CSV export coming soon">⬇ CSV</button>
+            </div>
+            <div class="data-table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>NAV (₹)</th>
+                  </tr>
+                </thead>
+                <tbody id="nav-table-body"></tbody>
+              </table>
+              <div class="table-footer" id="nav-table-footer"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-banner">
+          <div class="info-banner-left">
+            <span aria-hidden="true">ℹ️</span>
+            <span>For reference only. Past performance does not guarantee future results. This site does not provide investment recommendations or advice.</span>
+          </div>
+          <a class="source-link" id="scheme-disclosure-link" href="#" target="_blank" rel="noopener noreferrer">View official scheme page for disclosures →</a>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="/js/schemes.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/historical-data.js"></script>
+    <script>
+      initLayout("historical");
+      initHistoricalDataPage();
+    </script>
+  </body>
+</html>

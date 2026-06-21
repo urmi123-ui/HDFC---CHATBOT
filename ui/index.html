@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HDFC Insights Hub — Home</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <section class="hero">
+      <div class="container">
+        <h1>Understand HDFC mutual fund schemes — verified facts, no advice</h1>
+        <p>
+          Covers 12 specific schemes utilizing daily-updated public regulatory sources.
+          Navigate complex documents with a structured, transparent interface.
+        </p>
+        <div class="hero-actions">
+          <a href="/assistant.html" class="btn btn-primary">Facts Only Assistant</a>
+          <a href="/investment-faq.html" class="btn btn-outline">Investment FAQ</a>
+        </div>
+        <div class="try-asking">
+          <div class="try-asking-label">TRY ASKING</div>
+          <div class="chip-row" id="home-chips"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-bar">
+      <div class="container trust-items">
+        <div class="trust-item">
+          <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+          Source-backed
+        </div>
+        <div class="trust-item">
+          <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4"/><circle cx="12" cy="16" r="1"/><circle cx="12" cy="12" r="10"/></svg>
+          No advice
+        </div>
+        <div class="trust-item">
+          <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="17" y1="11" x2="23" y2="11"/></svg>
+          No login
+        </div>
+        <div class="trust-item">
+          <svg class="trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+          Daily refresh
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="card-grid card-grid--4">
+          <a href="/investment-faq.html" class="feature-card">
+            <div class="feature-card-icon">📋</div>
+            <h3>Investment FAQ</h3>
+            <p>Browse structured facts about expense ratio, exit load, benchmarks, and fund management.</p>
+          </a>
+          <a href="/market-trends.html" class="feature-card">
+            <div class="feature-card-icon">📈</div>
+            <h3>Market Trends</h3>
+            <p>Market analytics and sector overview — coming in a future release.</p>
+          </a>
+          <a href="/historical-data.html" class="feature-card">
+            <div class="feature-card-icon">📊</div>
+            <h3>Historical Data</h3>
+            <p>Access past NAV records and historical scheme data — coming soon.</p>
+          </a>
+          <a href="/assistant.html" class="feature-card">
+            <div class="feature-card-icon">💬</div>
+            <h3>Assistant</h3>
+            <p>Ask factual questions and get source-backed answers from 12 HDFC schemes.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top: 0">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured Schemes</h2>
+          <p>Explore factsheets and regulatory data for key funds.</p>
+        </div>
+        <div class="card-grid card-grid--3" id="featured-schemes"></div>
+      </div>
+    </section>
+
+    <div id="site-footer"></div>
+
+    <script src="/js/schemes.js"></script>
+    <script src="/js/layout.js"></script>
+    <script>
+      initLayout("home");
+
+      const featured = [
+        SCHEMES[0],
+        SCHEMES[1],
+        SCHEMES[2],
+        SCHEMES[3],
+        SCHEMES[4],
+        SCHEMES[7],
+      ];
+
+      document.getElementById("featured-schemes").innerHTML = featured
+        .map(
+          (s) => `
+          <article class="scheme-card">
+            <div class="scheme-card-top">
+              <span class="scheme-tag">${s.category}</span>
+              <span class="scheme-dot" aria-hidden="true"></span>
+            </div>
+            <h3>${s.shortName}</h3>
+            <p>${s.description}</p>
+            <a class="scheme-link" href="/investment-faq.html?scheme=${s.slug}">View facts →</a>
+          </article>`
+        )
+        .join("");
+
+      document.getElementById("home-chips").innerHTML = EXAMPLE_QUESTIONS.map(
+        (q) =>
+          `<a class="chip" href="/assistant.html?q=${encodeURIComponent(q)}">${q}</a>`
+      ).join("");
+    </script>
+  </body>
+</html>

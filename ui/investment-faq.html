@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Investment FAQ — HDFC Insights Hub</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div id="site-header"></div>
+
+    <main class="page-main">
+      <div class="container faq-layout">
+        <aside class="sidebar" id="faq-sidebar" aria-label="Scheme selection"></aside>
+
+        <div>
+          <h1 style="font-size: 1.75rem; margin: 0 0 0.5rem">Browse factual scheme information</h1>
+          <p class="page-subtitle" id="faq-subtitle">Select a category below to view specific details.</p>
+
+          <div class="category-tabs" id="category-tabs"></div>
+          <div id="faq-content"></div>
+
+          <div class="cta-banner">
+            <div class="cta-banner-text">
+              <span aria-hidden="true">💬</span>
+              Have a specific question not listed here?
+            </div>
+            <a href="/assistant.html" class="btn btn-primary btn-sm">Go to Facts Only Assistant</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="site-footer"></div>
+
+    <script src="/js/schemes.js"></script>
+    <script src="/js/layout.js"></script>
+    <script src="/js/sidebar.js"></script>
+    <script src="/js/faq.js"></script>
+    <script>
+      initLayout("faq");
+      initFaqPage();
+    </script>
+  </body>
+</html>
