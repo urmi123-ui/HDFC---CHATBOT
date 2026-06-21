@@ -22,10 +22,6 @@
           <nav class="main-nav" aria-label="Main navigation">${navLinks}</nav>
           <div class="header-actions">
             <span class="disclaimer-pill">Facts-only · No investment advice</span>
-            <label class="header-search" aria-label="Search site">
-              <span class="header-search-icon" aria-hidden="true">⌕</span>
-              <input type="search" class="header-search-input" placeholder="Search..." disabled title="Site search coming soon" />
-            </label>
           </div>
           <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
             <span></span><span></span><span></span>

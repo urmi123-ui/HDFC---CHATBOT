@@ -16,7 +16,7 @@ PAGES = {
     "/": ["HDFC Insights Hub", "Featured Schemes", "Facts Only Assistant"],
     "/index.html": ["verified facts, no advice", "TRY ASKING"],
     "/investment-faq.html": ["Browse factual scheme information", "category-tabs", "Go to Facts Only Assistant"],
-    "/market-trends.html": ["Market Trends", "Corpus-backed", "trends-content", "market-trends.js"],
+    "/market-trends.html": ["Market Trends", "Live corpus", "trends-content", "market-trends.js"],
     "/historical-data.html": ["Historical Data", "NAV Performance History", "scheme-select", "historical-data.js"],
     "/assistant.html": ["Facts Only Assistant", 'id="chat-input"', "chat.js"],
 }
@@ -60,22 +60,20 @@ class TestUIPages:
         assert "trends-content" in body
         assert "Coming soon" not in body
 
-    def test_historical_data_uses_current_year_not_2024(self, client):
+    def test_historical_data_has_working_chart_and_periods(self, client):
         response = client.get("/historical-data.html")
         body = response.text
-        assert "Oct 2023" not in body
-        assert "2024" not in body
-        assert "historical-data.js" in body
+        assert 'id="nav-chart"' in body
+        assert 'data-years="1"' in body
+        assert 'data-years="3"' in body
+        assert 'id="date-from"' in body
+        assert "Coming Soon" not in body
 
     def test_historical_data_js_generates_current_year_rows(self):
         current_year = str(datetime.now().year)
-        rows = (
-            "function generateSampleNavRows"
-            in (UI_JS_DIR / "historical-data.js").read_text(encoding="utf-8")
-        )
-        assert rows
+        source = (UI_JS_DIR / "historical-data.js").read_text(encoding="utf-8")
+        assert "function generateNavSeries" in source
 
-        # Simulate the date formatter output shape used by the page script.
         sample_date = datetime.now().strftime("%d %b %Y")
         assert current_year in sample_date
 

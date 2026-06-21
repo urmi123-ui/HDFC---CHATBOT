@@ -1,5 +1,10 @@
 {
   "steps": {
+    "fetch": {
+      "total": 12,
+      "success": 12,
+      "failed": []
+    },
     "parse": {
       "total": 12,
       "sections_per_scheme": {

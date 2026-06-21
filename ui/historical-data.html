@@ -22,10 +22,11 @@
             <select class="select-input" id="scheme-select"></select>
           </div>
           <div>
-            <label class="field-label" for="date-range">Date Range (Currently fixed to 1Y)</label>
-            <div class="date-range-field">
-              <span class="date-range-icon" aria-hidden="true">📅</span>
-              <input class="text-input date-range-input" id="date-range" type="text" disabled />
+            <label class="field-label">Date Range</label>
+            <div class="date-range-group">
+              <input class="text-input date-input" id="date-from" type="date" aria-label="Start date" />
+              <span class="date-range-sep">to</span>
+              <input class="text-input date-input" id="date-to" type="date" aria-label="End date" />
             </div>
           </div>
         </div>
@@ -39,23 +40,23 @@
                 </svg>
                 NAV Performance History
               </h2>
-              <div class="period-tabs">
-                <button type="button" class="period-tab period-tab--active">1Y</button>
-                <button type="button" class="period-tab" disabled>3Y</button>
-                <button type="button" class="period-tab" disabled>5Y</button>
+              <div class="period-tabs" id="period-tabs">
+                <button type="button" class="period-tab period-tab--active" data-years="1">1Y</button>
+                <button type="button" class="period-tab" data-years="3">3Y</button>
+                <button type="button" class="period-tab" data-years="5">5Y</button>
               </div>
             </div>
-            <div class="chart-coming-soon">
-              <div class="chart-coming-soon-icon">⏳</div>
-              <strong>Interactive Chart Coming Soon</strong>
-              <span>Detailed visual analysis tools are currently under development.</span>
+            <div class="nav-chart-wrap">
+              <svg class="nav-chart" id="nav-chart" viewBox="0 0 640 260" preserveAspectRatio="none" aria-label="NAV performance chart"></svg>
+              <div class="nav-chart-axis" id="nav-chart-axis"></div>
             </div>
+            <p class="chart-note">Sample NAV trend for illustration — not live market data.</p>
           </div>
 
           <div class="panel-card">
             <div class="panel-card-header">
               <h2>Data Table</h2>
-              <button type="button" class="csv-link" disabled title="CSV export coming soon">⬇ CSV</button>
+              <button type="button" class="csv-link" id="csv-export">⬇ CSV</button>
             </div>
             <div class="data-table-wrap">
               <table class="data-table">

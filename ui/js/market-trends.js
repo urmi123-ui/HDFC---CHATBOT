@@ -2,17 +2,53 @@
   const API_OVERVIEW = "/api/market-overview";
   const API_CHAT = "/api/chat";
 
+  const SECTOR_ICONS = {
+    Defence: "🛡️",
+    Pharma: "💊",
+    Healthcare: "🏥",
+    Thematic: "📈",
+    Sectoral: "🏭",
+    default: "📊",
+  };
+
   function escapeHtml(text) {
     const div = document.createElement("div");
     div.textContent = text == null ? "" : String(text);
     return div.innerHTML;
   }
 
-  function renderLoading() {
+  function sparklineValues(seed, count) {
+    const values = [];
+    let current = 40 + (seed % 20);
+    for (let i = 0; i < count; i += 1) {
+      current += Math.sin(i / 2 + seed) * 3 + (seed % 5) * 0.2;
+      values.push(Math.max(8, Math.min(92, current)));
+    }
+    return values;
+  }
+
+  function renderSparkline(values, stroke) {
+    const width = 120;
+    const height = 48;
+    const min = Math.min(...values);
+    const max = Math.max(...values);
+    const range = max - min || 1;
+    const points = values
+      .map((value, index) => {
+        const x = (index / Math.max(values.length - 1, 1)) * width;
+        const y = height - ((value - min) / range) * (height - 6) - 3;
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      })
+      .join(" ");
+
     return `
-      <div class="trends-loading">
-        <p>Loading corpus-backed market overview…</p>
-      </div>`;
+      <svg class="sparkline" viewBox="0 0 ${width} ${height}" preserveAspectRatio="none" aria-hidden="true">
+        <polyline fill="none" stroke="${stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="${points}" />
+      </svg>`;
+  }
+
+  function renderLoading() {
+    return `<div class="trends-loading"><p>Loading market overview…</p></div>`;
   }
 
   function renderError(message) {
@@ -23,90 +59,146 @@
       </div>`;
   }
 
-  function renderCategoryBars(groups) {
-    if (!groups.length) return "";
-    const maxCount = Math.max(...groups.map((g) => g.count));
+  function renderHero(data) {
+    return `
+      <section class="groww-hero">
+        <div class="groww-hero-copy">
+          <p class="groww-eyebrow">Market overview</p>
+          <h2>Track index, sector &amp; commodity-linked scheme facts</h2>
+          <p>${escapeHtml(data.corpus_note)}</p>
+          ${
+            data.last_corpus_refresh
+              ? `<span class="groww-meta-pill">Updated ${escapeHtml(data.last_corpus_refresh)}</span>`
+              : ""
+          }
+        </div>
+        <div class="groww-hero-stats">
+          <div class="groww-stat">
+            <span class="groww-stat-value">${data.scheme_count || 12}</span>
+            <span class="groww-stat-label">Schemes indexed</span>
+          </div>
+          <div class="groww-stat">
+            <span class="groww-stat-value">${(data.category_groups || []).length}</span>
+            <span class="groww-stat-label">Categories</span>
+          </div>
+          <div class="groww-stat">
+            <span class="groww-stat-value">${(data.sector_cards || []).length}</span>
+            <span class="groww-stat-label">Thematic funds</span>
+          </div>
+        </div>
+      </section>`;
+  }
 
-    const rows = groups
-      .map((group) => {
-        const width = Math.max(12, Math.round((group.count / maxCount) * 100));
-        const schemes = group.schemes
-          .map((s) => `<li><a href="/investment-faq.html?scheme=${encodeURIComponent(s.slug)}">${escapeHtml(s.short_name || s.scheme_name)}</a></li>`)
-          .join("");
+  function renderIndexStrip(indexCards, commodityCards) {
+    const cards = [...(indexCards || []), ...(commodityCards || [])];
+    if (!cards.length) return "";
+
+    const items = cards
+      .map((card, index) => {
+        const seed = (card.label || card.id || "x").length * 17 + index * 11;
+        const spark = renderSparkline(sparklineValues(seed, 14), card.label === "Gold" ? "#d4a017" : card.label === "Silver" ? "#94a3b8" : "#22704a");
+        const commodityClass =
+          card.label === "Gold" ? "groww-index-card--gold" : card.label === "Silver" ? "groww-index-card--silver" : "";
+
         return `
-          <article class="category-bar-card">
-            <div class="category-bar-head">
-              <strong>${escapeHtml(group.category)}</strong>
-              <span>${group.count} scheme${group.count === 1 ? "" : "s"}</span>
+          <article class="groww-index-card ${commodityClass}">
+            <div class="groww-index-card-top">
+              <div>
+                <span class="groww-index-label">${escapeHtml(card.label)}</span>
+                <h3>${escapeHtml(card.subtitle || card.label)}</h3>
+              </div>
+              ${card.label === "Gold" || card.label === "Silver" ? `<span class="commodity-dot commodity-dot--${card.label.toLowerCase()}"></span>` : ""}
             </div>
-            <div class="category-bar-track"><div class="category-bar-fill" style="width:${width}%"></div></div>
-            <ul class="category-scheme-list">${schemes}</ul>
+            ${spark}
+            <p class="groww-index-fact">${escapeHtml(card.fact)}</p>
+            ${
+              card.source_url
+                ? `<a class="source-link" href="${escapeHtml(card.source_url)}" target="_blank" rel="noopener noreferrer">View source →</a>`
+                : ""
+            }
           </article>`;
       })
       .join("");
 
     return `
       <section class="trends-section">
-        <div class="section-header">
-          <h2>Scheme mix in corpus</h2>
-          <p>Factual category breakdown from the 12 indexed HDFC schemes.</p>
+        <div class="groww-section-head">
+          <h2>Indices &amp; commodities</h2>
+          <p>Corpus-backed facts — not live exchange prices.</p>
         </div>
-        <div class="category-bars">${rows}</div>
+        <div class="groww-index-grid">${items}</div>
       </section>`;
   }
 
-  function renderHighlightCards(title, cards, cardClass) {
-    if (!cards.length) return "";
+  function renderCategoryTabs(groups) {
+    if (!groups.length) return "";
 
-    const items = cards
+    const tabs = groups
       .map(
-        (card) => `
-        <article class="fact-card ${cardClass || ""}">
-          <div class="fact-card-label">${escapeHtml(card.label)}</div>
-          <h3>${escapeHtml(card.subtitle || card.label)}</h3>
-          <p>${escapeHtml(card.fact)}</p>
-          ${
-            card.source_url
-              ? `<a class="source-link" href="${escapeHtml(card.source_url)}" target="_blank" rel="noopener noreferrer">View source →</a>`
-              : ""
-          }
-          ${
-            card.last_updated
-              ? `<div class="fact-card-date">Last updated from sources: ${escapeHtml(card.last_updated)}</div>`
-              : ""
-          }
-        </article>`
+        (group, index) =>
+          `<button type="button" class="groww-filter-tab${index === 0 ? " groww-filter-tab--active" : ""}" data-category="${escapeHtml(group.category)}">${escapeHtml(group.category)} <span>${group.count}</span></button>`
       )
+      .join("");
+
+    const panels = groups
+      .map((group, index) => {
+        const schemes = group.schemes
+          .map(
+            (scheme) => `
+            <a class="groww-scheme-row" href="/investment-faq.html?scheme=${encodeURIComponent(scheme.slug)}">
+              <span>${escapeHtml(scheme.short_name || scheme.scheme_name)}</span>
+              <span class="groww-scheme-arrow">→</span>
+            </a>`
+          )
+          .join("");
+
+        return `
+          <div class="groww-category-panel${index === 0 ? "" : " hidden"}" data-category-panel="${escapeHtml(group.category)}">
+            ${schemes}
+          </div>`;
+      })
       .join("");
 
     return `
       <section class="trends-section">
-        <h2>${escapeHtml(title)}</h2>
-        <div class="fact-card-grid">${items}</div>
+        <div class="groww-section-head">
+          <h2>Explore by category</h2>
+          <p>Browse indexed HDFC schemes grouped by investment style.</p>
+        </div>
+        <div class="groww-filter-tabs" id="groww-category-tabs">${tabs}</div>
+        <div class="groww-category-panels">${panels}</div>
       </section>`;
   }
 
-  function renderSectorCards(cards) {
+  function sectorIcon(category) {
+    const key = Object.keys(SECTOR_ICONS).find((name) => (category || "").includes(name));
+    return SECTOR_ICONS[key || "default"];
+  }
+
+  function renderSectorGrid(cards) {
     if (!cards.length) return "";
 
     const items = cards
-      .map(
-        (card) => `
-        <article class="sector-fact-card">
-          <span class="scheme-tag">${escapeHtml(card.category)}</span>
-          <h3>${escapeHtml(card.title)}</h3>
-          <p>${escapeHtml(card.fact)}</p>
-          <a class="source-link" href="${escapeHtml(card.source_url)}" target="_blank" rel="noopener noreferrer">View source →</a>
-        </article>`
-      )
+      .map((card) => {
+        const icon = sectorIcon(card.category);
+        return `
+          <article class="groww-sector-card">
+            <div class="groww-sector-icon" aria-hidden="true">${icon}</div>
+            <span class="scheme-tag">${escapeHtml(card.category)}</span>
+            <h3>${escapeHtml(card.title)}</h3>
+            <p>${escapeHtml(card.fact)}</p>
+            <a class="source-link" href="${escapeHtml(card.source_url)}" target="_blank" rel="noopener noreferrer">View source →</a>
+          </article>`;
+      })
       .join("");
 
     return `
-      <section class="trends-section">
-        <div class="sector-header">
-          <h2>Sector &amp; thematic schemes</h2>
+      <section class="trends-section sector-section">
+        <div class="groww-section-head">
+          <h2>Sector &amp; thematic</h2>
+          <p>Defence, pharma, and other thematic exposures in the corpus.</p>
         </div>
-        <div class="sector-fact-grid">${items}</div>
+        <div class="groww-sector-grid">${items}</div>
       </section>`;
   }
 
@@ -116,10 +208,10 @@
       .join("");
 
     return `
-      <section class="trends-section trends-ask-panel">
-        <div class="section-header">
-          <h2>Ask about market-linked scheme facts</h2>
-          <p>Live Q&amp;A using the same facts-only assistant — benchmarks, objectives, and scheme categories from indexed sources.</p>
+      <section class="trends-section groww-ask-panel">
+        <div class="groww-section-head">
+          <h2>Ask the assistant</h2>
+          <p>Get source-backed answers about benchmarks, objectives, and scheme facts.</p>
         </div>
         <div class="chip-row">${chips}</div>
         <div class="trends-chat-log" id="trends-chat-log" aria-live="polite"></div>
@@ -132,18 +224,28 @@
   }
 
   function renderOverview(data) {
-    const refresh = data.last_corpus_refresh
-      ? `Corpus last refreshed: ${escapeHtml(data.last_corpus_refresh)}`
-      : "";
-
     return `
-      <p class="trends-corpus-note">${escapeHtml(data.corpus_note)}</p>
-      <p class="trends-refresh-note">${refresh}</p>
-      ${renderCategoryBars(data.category_groups || [])}
-      ${renderHighlightCards("Index exposure in corpus", data.index_cards || [], "fact-card--index")}
-      ${renderHighlightCards("Commodity-linked schemes", data.commodity_cards || [], "fact-card--commodity")}
-      ${renderSectorCards(data.sector_cards || [])}
+      ${renderHero(data)}
+      ${renderIndexStrip(data.index_cards, data.commodity_cards)}
+      ${renderCategoryTabs(data.category_groups || [])}
+      ${renderSectorGrid(data.sector_cards || [])}
       ${renderAskPanel(data.suggested_questions || [])}`;
+  }
+
+  function bindCategoryTabs() {
+    const tabs = document.querySelectorAll(".groww-filter-tab");
+    const panels = document.querySelectorAll(".groww-category-panel");
+    if (!tabs.length) return;
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const category = tab.dataset.category;
+        tabs.forEach((item) => item.classList.toggle("groww-filter-tab--active", item === tab));
+        panels.forEach((panel) => {
+          panel.classList.toggle("hidden", panel.dataset.categoryPanel !== category);
+        });
+      });
+    });
   }
 
   function appendTrendsMessage(container, role, payload) {
@@ -218,7 +320,7 @@
     }
   }
 
-  function bindAskPanel(questions) {
+  function bindAskPanel() {
     const form = document.getElementById("trends-chat-form");
     const input = document.getElementById("trends-chat-input");
     const log = document.getElementById("trends-chat-log");
@@ -253,7 +355,8 @@
       }
       const data = await response.json();
       mount.innerHTML = renderOverview(data);
-      bindAskPanel(data.suggested_questions);
+      bindCategoryTabs();
+      bindAskPanel();
     } catch (err) {
       mount.innerHTML = renderError(err.message || "Failed to load market trends.");
       document.getElementById("trends-retry")?.addEventListener("click", loadMarketTrends);
